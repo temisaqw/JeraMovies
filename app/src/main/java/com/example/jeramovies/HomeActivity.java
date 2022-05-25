@@ -32,6 +32,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -41,6 +42,8 @@ public class HomeActivity extends AppCompatActivity {
     private Button logoutButton, addButton;
     private AccessToken acessToken;
     private ListView listaContas;
+    private ContaDao contaDao;
+    private List<Conta> contas;
     private ArrayList<String> itens = new ArrayList<String>();
 
     @Override
@@ -50,11 +53,17 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.home_screen);
 
         mAuth = FirebaseAuth.getInstance();
+        contaDao = new ContaDao(this);
 
         logoutButton = findViewById(R.id.logoutButton);
         addButton = findViewById(R.id.addButton);
         listaContas = findViewById(R.id.listaDeContas);
         nomeNovaConta = findViewById(R.id.nomeNovaConta);
+
+        contas = contaDao.carregarContas();
+        for(Conta conta : contas){
+            itens.add("Conta de: " + conta.getNome());
+        }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(HomeActivity.this,
                 android.R.layout.simple_list_item_1,itens);
@@ -79,8 +88,9 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (itens.size()<4) {
-                    Conta conta = new Conta(itens.size(), nomeNovaConta.toString().trim());
-                    itens.add("Usuario " + itens.size());
+                    Conta conta = new Conta(nomeNovaConta.getText().toString().trim());
+                    itens.add("Conta de: " + conta.getNome());
+                    contaDao.inserir(conta);
                     adapter.notifyDataSetChanged();
                 } else {
                     Toast.makeText(HomeActivity.this, "Máximo de quatro contas", Toast.LENGTH_SHORT).show();
