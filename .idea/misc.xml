@@ -6,9 +6,13 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.14990942028985507" />
         <entry key="app/src/main/res/layout/home_screen.xml" value="0.22" />
         <entry key="app/src/main/res/layout/login_screen.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/menu_itens.xml" value="0.21354166666666666" />
+        <entry key="app/src/main/res/layout/menu_screen.xml" value="0.21354166666666666" />
+        <entry key="app/src/main/res/layout/minha_lista_screen.xml" value="0.2125" />
         <entry key="app/src/main/res/layout/registro_screen.xml" value="0.2125" />
         <entry key="app/src/main/res/layout/tela_registr.xml" value="0.333984375" />
         <entry key="app/src/main/res/layout/tela_registro.xml" value="0.33" />
+        <entry key="app/src/main/res/menu/menu_geral.xml" value="0.21354166666666666" />
       </map>
     </option>
   </component>

@@ -24,6 +24,10 @@ public class ContaDao {
         return banco.insert("conta", null, values);
     }
 
+    public void excluir (Conta conta){
+        banco.delete("conta","id=?", new String[]{String.valueOf(conta.getId())});
+    }
+
     public List<Conta> carregarContas(){
         List<Conta> contas = new ArrayList<Conta>();
         Cursor cursor = banco.query("conta", new String[]{"id","nome"},null,null,null,null,null,null);
@@ -35,4 +39,6 @@ public class ContaDao {
         }
         return contas;
     }
+
+
 }

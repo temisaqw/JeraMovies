@@ -2,6 +2,7 @@ package com.example.jeramovies;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -80,7 +81,10 @@ public class HomeActivity extends AppCompatActivity {
         listaContas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                Conta contaAtual = contas.get(position);
+                Intent intent = new Intent(HomeActivity.this, MenuActivity.class);
+                intent.putExtra("contaSelecionada", (Parcelable) contaAtual);
+                startActivity(intent);
             }
         });
 
@@ -89,6 +93,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (itens.size()<4) {
                     Conta conta = new Conta(nomeNovaConta.getText().toString().trim());
+                    contas.add(conta);
                     itens.add("Conta de: " + conta.getNome());
                     contaDao.inserir(conta);
                     adapter.notifyDataSetChanged();
