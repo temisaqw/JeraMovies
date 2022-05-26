@@ -1,9 +1,10 @@
-package com.example.jeramovies;
+package com.example.jeramovies.activity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,6 +16,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+
+import com.example.jeramovies.R;
+import com.example.jeramovies.conexao.FilmesDao;
+import com.example.jeramovies.objetos.Conta;
+import com.example.jeramovies.objetos.FilmesVerDepois;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,6 +43,7 @@ public class MenuActivity extends Activity {
     private List<String> nomeFilmes = new ArrayList<>();
     private List<String> idFilmes = new ArrayList<String>();
     private FilmesDao filmesDao;
+    private Conta contaAtual;
 
     private static String JSON_URL = "https://api.themoviedb.org/3/movie/popular?api_key=8649b2d9c70b73597a22eb5041abc7b2";
 
@@ -58,7 +65,9 @@ public class MenuActivity extends Activity {
         listaButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MenuActivity.this, MinhaListaActivity.class));
+                Intent intent = new Intent(MenuActivity.this, MinhaListaActivity.class);
+                intent.putExtra("contaSelecionada", (Parcelable) contaAtual);
+                startActivity(intent);
             }
         });
 
@@ -71,7 +80,7 @@ public class MenuActivity extends Activity {
 
     private void configuraBemVindo() {
         Intent i = getIntent();
-        Conta contaAtual = (Conta) i.getParcelableExtra("contaSelecionada");
+        contaAtual = i.getParcelableExtra("contaSelecionada");
         boasVindas.setText("Bem vindo " + contaAtual.getNome());
     }
 
@@ -121,7 +130,7 @@ public class MenuActivity extends Activity {
                     JSONObject jsonObject1 = jsonArray.getJSONObject(i);
 
                     String movieName = jsonObject1.getString("title");
-                    String movieId = jsonObject1.getString("id");//TODO verificar qual o cod no json
+                    String movieId = jsonObject1.getString("id");
                     nomeFilmes.add(movieName);
                     idFilmes.add(movieId);
                 }
@@ -146,8 +155,9 @@ public class MenuActivity extends Activity {
 
         String nome = nomeFilmes.get(menuInfo.position);
         String id = idFilmes.get(menuInfo.position);
+        int conta = contaAtual.getId();
 
-        final FilmesVerDepois filmesVerDepois = new FilmesVerDepois(id, nome);
+        final FilmesVerDepois filmesVerDepois = new FilmesVerDepois(id, nome, conta);
         filmesDao.adicionarFilmeVerDepois(filmesVerDepois);
     }
 }

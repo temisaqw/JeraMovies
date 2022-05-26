@@ -1,4 +1,4 @@
-package com.example.jeramovies;
+package com.example.jeramovies.loginActivity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,6 +12,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.jeramovies.activity.ContasActivity;
+import com.example.jeramovies.R;
+import com.example.jeramovies.objetos.Usuario;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -97,7 +100,7 @@ public class RegistroActivity extends Activity {
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()) {
                             Toast.makeText(RegistroActivity.this, "Usuário registrado com sucesso!", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(RegistroActivity.this, HomeActivity.class));
+                            startActivity(new Intent(RegistroActivity.this, ContasActivity.class));
                         } else {
                             Log.e("", "onComplete: Failed=" + task.getException().getMessage());
                             Toast.makeText(RegistroActivity.this, "Falha ao registrar usuário...", Toast.LENGTH_SHORT).show();

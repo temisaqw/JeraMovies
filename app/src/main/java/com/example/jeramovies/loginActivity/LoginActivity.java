@@ -1,4 +1,4 @@
-package com.example.jeramovies;
+package com.example.jeramovies.loginActivity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,14 +11,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.jeramovies.activity.ContasActivity;
+import com.example.jeramovies.R;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
-import com.facebook.login.Login;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -52,7 +51,7 @@ public class LoginActivity extends Activity {
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                startActivity(new Intent(LoginActivity.this, ContasActivity.class));
                 finish();
                 Toast.makeText(LoginActivity.this, "Logado", Toast.LENGTH_SHORT).show();
             }
@@ -108,7 +107,7 @@ public class LoginActivity extends Activity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
-                            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                            startActivity(new Intent(LoginActivity.this, ContasActivity.class));
                         } else {
                             Toast.makeText(LoginActivity.this, "Falha ao logar!", Toast.LENGTH_SHORT).show();
                         }

@@ -1,11 +1,9 @@
-package com.example.jeramovies;
+package com.example.jeramovies.objetos;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
-
-import java.util.ArrayList;
 
 public class Conta implements Parcelable {
     private int id;

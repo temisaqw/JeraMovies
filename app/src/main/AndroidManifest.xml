@@ -26,11 +26,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HomeActivity"/>
-        <activity android:name=".LoginActivity"/>
-        <activity android:name=".RegistroActivity"/>
-        <activity android:name=".MinhaListaActivity"/>
-        <activity android:name=".MenuActivity"/>
+        <activity android:name=".activity.ContasActivity"/>
+        <activity android:name=".loginActivity.LoginActivity"/>
+        <activity android:name=".loginActivity.RegistroActivity"/>
+        <activity android:name=".activity.MinhaListaActivity"/>
+        <activity android:name=".activity.MenuActivity"/>
         <activity android:name="com.facebook.FacebookActivity"
             android:configChanges=
                 "keyboard|keyboardHidden|screenLayout|screenSize|orientation" />

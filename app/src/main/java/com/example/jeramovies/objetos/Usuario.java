@@ -1,4 +1,4 @@
-package com.example.jeramovies;
+package com.example.jeramovies.objetos;
 
 public class Usuario {
     private String nome;

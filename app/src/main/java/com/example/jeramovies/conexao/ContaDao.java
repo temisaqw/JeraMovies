@@ -1,10 +1,14 @@
-package com.example.jeramovies;
+package com.example.jeramovies.conexao;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.example.jeramovies.objetos.Conta;
+
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +30,16 @@ public class ContaDao {
 
     public void excluir (Conta conta){
         banco.delete("conta","id=?", new String[]{String.valueOf(conta.getId())});
+    }
+
+    public Conta maisRecente(){
+        Conta contaMaisRecente = new Conta();
+        Cursor cursor = banco.query("conta", new String[]{"id","nome"},null,null,null,null,null,null);
+        while (cursor.moveToNext()){
+            contaMaisRecente.setId(cursor.getInt(0));
+            contaMaisRecente.setNome(cursor.getString(1));
+        }
+        return contaMaisRecente;
     }
 
     public List<Conta> carregarContas(){

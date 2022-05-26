@@ -1,4 +1,4 @@
-package com.example.jeramovies;
+package com.example.jeramovies.conexao;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -20,7 +20,7 @@ public class BancoDados extends SQLiteOpenHelper {
         db.execSQL("create table conta(id integer primary key autoincrement, " +
                 "nome varchar (50), email varchar (50), dataNascimento varchar(10))");
         db.execSQL("create table filmes(id integer primary key autoincrement, " +
-                "idFilme varchar (50), nomeFilme varchar(50))");
+                "idConta integer, idFilme varchar (50), nomeFilme varchar(50))");
     }
 
     @Override
