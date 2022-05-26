@@ -39,61 +39,70 @@ public class RegistroActivity extends Activity {
         registrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String nomeRegistro = nome.getText().toString().trim();
-                String emailRegistro = email.getText().toString().trim();
-                String senhaRegistro = senha.getText().toString().trim();
-                String dataRegistro = data.getText().toString().trim();
-
-                if (!nomeRegistro.isEmpty()) {
-                    if (Patterns.EMAIL_ADDRESS.matcher(emailRegistro).matches()) {
-                        if (!senhaRegistro.isEmpty()) {
-                            if (!dataRegistro.isEmpty()) {
-                                registrarUsuario(nomeRegistro, emailRegistro, senhaRegistro, dataRegistro);
-                            } else {
-                                data.setError("Informe uma data!");
-                                data.requestFocus();
-                            }
-                        } else {
-                            senha.setError("Informe uma senha!");
-                            senha.requestFocus();
-                        }
-                    } else {
-                        if (!emailRegistro.isEmpty()) {
-                            email.setError("Informe um email válido!");
-                        } else {
-                            email.setError("Informe um email!");
-                        }
-                        email.requestFocus();
-                    }
-                } else {
-                    nome.setError("Informe um nome!");
-                    nome.requestFocus();
-                }
+                verificaLogin();
             }
         });
     }
+
+    private void verificaLogin() {
+        String nomeRegistro = nome.getText().toString().trim();
+        String emailRegistro = email.getText().toString().trim();
+        String senhaRegistro = senha.getText().toString().trim();
+        String dataRegistro = data.getText().toString().trim();
+
+        if (!nomeRegistro.isEmpty()) {
+            if (Patterns.EMAIL_ADDRESS.matcher(emailRegistro).matches()) {
+                if (!senhaRegistro.isEmpty()) {
+                    if (!dataRegistro.isEmpty()) {
+                        registrarUsuario(nomeRegistro, emailRegistro, senhaRegistro, dataRegistro);
+                    } else {
+                        data.setError("Informe uma data!");
+                        data.requestFocus();
+                    }
+                } else {
+                    senha.setError("Informe uma senha!");
+                    senha.requestFocus();
+                }
+            } else {
+                if (!emailRegistro.isEmpty()) {
+                    email.setError("Informe um email válido!");
+                } else {
+                    email.setError("Informe um email!");
+                }
+                email.requestFocus();
+            }
+        } else {
+            nome.setError("Informe um nome!");
+            nome.requestFocus();
+        }
+    }
+
     public void registrarUsuario(String nome, String email, String senha, String data){
         mAuth.createUserWithEmailAndPassword(email, senha).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()){
-                    Usuario usuario = new Usuario(nome, email, data);
-                    FirebaseDatabase.getInstance().getReference("Usuario")
-                            .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                            .setValue(usuario).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if(task.isSuccessful()) {
-                                        Toast.makeText(RegistroActivity.this, "Usuário registrado com sucesso!", Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(RegistroActivity.this, HomeActivity.class));
-                                    } else {
-                                        Log.e("", "onComplete: Failed=" + task.getException().getMessage());
-                                        Toast.makeText(RegistroActivity.this, "Falha ao registrar usuário...", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
+                    geraUsuario(nome, email, data);
                 }
             }
         });
+    }
+
+    private void geraUsuario(String nome, String email, String data) {
+        Usuario usuario = new Usuario(nome, email, data);
+        FirebaseDatabase.getInstance().getReference("Usuario")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .setValue(usuario).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()) {
+                            Toast.makeText(RegistroActivity.this, "Usuário registrado com sucesso!", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(RegistroActivity.this, HomeActivity.class));
+                        } else {
+                            Log.e("", "onComplete: Failed=" + task.getException().getMessage());
+                            Toast.makeText(RegistroActivity.this, "Falha ao registrar usuário...", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 }

@@ -52,7 +52,6 @@ public class LoginActivity extends Activity {
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                //TODO pegar aniversário pelo facebook.
                 startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                 finish();
                 Toast.makeText(LoginActivity.this, "Logado", Toast.LENGTH_SHORT).show();
@@ -73,24 +72,7 @@ public class LoginActivity extends Activity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String inputLogin = login.getText().toString().trim();
-                String inputPassword = password.getText().toString().trim();
-                if (inputLogin.isEmpty() || inputPassword.isEmpty()) {
-                    Toast.makeText(LoginActivity.this, "Usuário ou senha não inseridos!", Toast.LENGTH_SHORT).show();
-                } else {
-                    mAuth.signInWithEmailAndPassword(inputLogin, inputPassword)
-                            .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (task.isSuccessful()) {
-                                        FirebaseUser user = mAuth.getCurrentUser();
-                                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                                    } else {
-                                        Toast.makeText(LoginActivity.this, "Falha ao logar!", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
-                }
+                tentaLogarUsuario();
             }
         });
 
@@ -107,6 +89,31 @@ public class LoginActivity extends Activity {
                 startActivity(new Intent(LoginActivity.this, RegistroActivity.class));
             }
         });
+    }
+
+    private void tentaLogarUsuario() {
+        String inputLogin = login.getText().toString().trim();
+        String inputPassword = password.getText().toString().trim();
+        if (inputLogin.isEmpty() || inputPassword.isEmpty()) {
+            Toast.makeText(LoginActivity.this, "Usuário ou senha não inseridos!", Toast.LENGTH_SHORT).show();
+        } else {
+            logarUsuario(inputLogin, inputPassword);
+        }
+    }
+
+    private void logarUsuario(String inputLogin, String inputPassword) {
+        mAuth.signInWithEmailAndPassword(inputLogin, inputPassword)
+                .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Falha ao logar!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
     @Override

@@ -8,6 +8,10 @@ public class FilmesVerDepois{
     private String idFilme;
     private String nomeFilme;
 
+    public FilmesVerDepois(){
+
+    }
+
     public FilmesVerDepois(String idFilme, String nomeFilme){
         this.idFilme = idFilme;
         this.nomeFilme = nomeFilme;

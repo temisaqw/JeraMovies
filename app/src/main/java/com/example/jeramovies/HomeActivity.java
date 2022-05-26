@@ -46,6 +46,7 @@ public class HomeActivity extends AppCompatActivity {
     private ContaDao contaDao;
     private List<Conta> contas;
     private ArrayList<String> itens = new ArrayList<String>();
+    ArrayAdapter<String> adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,15 +62,7 @@ public class HomeActivity extends AppCompatActivity {
         listaContas = findViewById(R.id.listaDeContas);
         nomeNovaConta = findViewById(R.id.nomeNovaConta);
 
-        contas = contaDao.carregarContas();
-        for(Conta conta : contas){
-            itens.add("Conta de: " + conta.getNome());
-        }
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(HomeActivity.this,
-                android.R.layout.simple_list_item_1,itens);
-
-        listaContas.setAdapter(adapter);
+        gerarContas();
 
         logoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,10 +74,7 @@ public class HomeActivity extends AppCompatActivity {
         listaContas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Conta contaAtual = contas.get(position);
-                Intent intent = new Intent(HomeActivity.this, MenuActivity.class);
-                intent.putExtra("contaSelecionada", (Parcelable) contaAtual);
-                startActivity(intent);
+                acessarConta(position);
             }
         });
 
@@ -92,16 +82,37 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (itens.size()<4) {
-                    Conta conta = new Conta(nomeNovaConta.getText().toString().trim());
-                    contas.add(conta);
-                    itens.add("Conta de: " + conta.getNome());
-                    contaDao.inserir(conta);
-                    adapter.notifyDataSetChanged();
+                    criarConta();
                 } else {
                     Toast.makeText(HomeActivity.this, "Máximo de quatro contas", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+    }
+
+    private void criarConta() {
+        Conta conta = new Conta(nomeNovaConta.getText().toString().trim());
+        contas.add(conta);
+        itens.add("Conta de: " + conta.getNome());
+        contaDao.inserir(conta);
+        adapter.notifyDataSetChanged();
+    }
+
+    private void acessarConta(int position) {
+        Conta contaAtual = contas.get(position);
+        Intent intent = new Intent(HomeActivity.this, MenuActivity.class);
+        intent.putExtra("contaSelecionada", (Parcelable) contaAtual);
+        startActivity(intent);
+    }
+
+    private void gerarContas() {
+        contas = contaDao.carregarContas();
+        for(Conta conta : contas){
+            itens.add("Conta de: " + conta.getNome());
+        }
+        adapter = new ArrayAdapter<String>(HomeActivity.this,
+                android.R.layout.simple_list_item_1,itens);
+        listaContas.setAdapter(adapter);
     }
 
     @Override

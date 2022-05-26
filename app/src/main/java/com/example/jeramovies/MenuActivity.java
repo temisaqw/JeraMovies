@@ -49,15 +49,30 @@ public class MenuActivity extends Activity {
         buscarButton = findViewById(R.id.buscaButton);
         listaSugestoes = findViewById(R.id.listaRecomendados);
 
+        filmesDao = new FilmesDao(this);
+
+        configuraListaFilme();
+        configuraBemVindo();
+        registerForContextMenu(listaSugestoes);
+
+        listaButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MenuActivity.this, MinhaListaActivity.class));
+            }
+        });
+
+    }
+
+    private void configuraListaFilme() {
         GetData getData = new GetData();
         getData.execute();
+    }
 
+    private void configuraBemVindo() {
         Intent i = getIntent();
         Conta contaAtual = (Conta) i.getParcelableExtra("contaSelecionada");
         boasVindas.setText("Bem vindo " + contaAtual.getNome());
-
-        registerForContextMenu(listaSugestoes);
-
     }
 
     public class GetData extends AsyncTask<String, String, String> {

@@ -15,19 +15,17 @@ import com.google.firebase.auth.FirebaseAuth;
 public class MainActivity extends AppCompatActivity {
      private FirebaseAuth mAuth;
      AccessToken accessToken;
-     boolean isLoggedIn;
 
      protected void onCreate(Bundle savedInstanceState) {
          super.onCreate(savedInstanceState);
             mAuth = FirebaseAuth.getInstance();
             accessToken = AccessToken.getCurrentAccessToken();
-            isLoggedIn = accessToken != null && !accessToken.isExpired();
         }
 
         @Override
         protected void onStart() {
             super.onStart();
-            if (mAuth.getCurrentUser() == null || !isLoggedIn) {
+            if (mAuth.getCurrentUser() == null || accessToken == null) {
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
             } else {
                 startActivity(new Intent(MainActivity.this, HomeActivity.class));
