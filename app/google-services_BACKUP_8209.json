@@ -1,0 +1,51 @@
+{
+  "project_info": {
+    "project_number": "816640653817",
+    "firebase_url": "https://jeramovies-default-rtdb.firebaseio.com",
+    "project_id": "jeramovies",
+    "storage_bucket": "jeramovies.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:816640653817:android:6b01a5bf064ff9d8bea528",
+        "android_client_info": {
+          "package_name": "com.example.jeramovies"
+        }
+      },
+      "oauth_client": [
+        {
+<<<<<<< HEAD
+=======
+          "client_id": "816640653817-uj0enuhl7eru63jjq4dnbdvav9q8q50q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.jeramovies",
+            "certificate_hash": "18354d01aa291455a0c16a94f8c14bff019c2647"
+          }
+        },
+        {
+>>>>>>> dev
+          "client_id": "816640653817-96jsnn0fcj86elpec27la2ao42khaj1d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWygQPGth2fd3XqXLcMOanpUFveSYQCsg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "816640653817-96jsnn0fcj86elpec27la2ao42khaj1d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
