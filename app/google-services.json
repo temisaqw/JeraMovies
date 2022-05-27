@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "816640653817-uj0enuhl7eru63jjq4dnbdvav9q8q50q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.jeramovies",
+            "certificate_hash": "18354d01aa291455a0c16a94f8c14bff019c2647"
+          }
+        },
+        {
           "client_id": "816640653817-96jsnn0fcj86elpec27la2ao42khaj1d.apps.googleusercontent.com",
           "client_type": 3
         }
