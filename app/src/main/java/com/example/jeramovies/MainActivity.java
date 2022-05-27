@@ -2,51 +2,31 @@ package com.example.jeramovies;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+
+import com.example.jeramovies.activity.ContasActivity;
+import com.example.jeramovies.loginActivity.LoginActivity;
+import com.facebook.AccessToken;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
+     private FirebaseAuth mAuth;
+     AccessToken accessToken;
 
-    private EditText login;
-    private EditText password;
-    private Button loginButton;
-    private Button registerButton;
+     protected void onCreate(Bundle savedInstanceState) {
+         super.onCreate(savedInstanceState);
+            mAuth = FirebaseAuth.getInstance();
+            accessToken = AccessToken.getCurrentAccessToken();
+        }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_screen);
-
-        login = findViewById(R.id.login);
-        password = findViewById(R.id.password);
-        loginButton = findViewById(R.id.loginButton);
-        registerButton = findViewById(R.id.registerButton);
-
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String inputLogin = login.getText().toString();
-                String inputPassword = password.getText().toString();
-
-                if (inputLogin.isEmpty() || inputPassword.isEmpty()){
-                    Toast.makeText(MainActivity.this, "Usuário ou senha não inseridos!", Toast.LENGTH_SHORT).show();
-                } else{
-                    validateLogin();
-                }
+        @Override
+        protected void onStart() {
+            super.onStart();
+            if (mAuth.getCurrentUser() == null || accessToken == null) {
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            } else {
+                startActivity(new Intent(MainActivity.this, ContasActivity.class));
             }
-        });
-        registerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-    }
-
-    private void validateLogin(){
-
-    }
+     }
 }

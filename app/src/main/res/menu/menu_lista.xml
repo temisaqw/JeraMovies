@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/assistiButton"
+        android:onClick="marcarVisto"
+        android:title="Já assisti"/>
+
+    <item
+        android:id="@+id/removerButton"
+        android:onClick="remover"
+        android:title="Remover" />
+</menu>
