@@ -29,6 +29,7 @@ public class MinhaListaActivity extends Activity {
     private List<FilmesVerDepois> filmes;
     private ArrayList<String> listaFilmes = new ArrayList<>();
     private Conta contaAtual;
+    private ArrayAdapter<String> adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,6 +37,7 @@ public class MinhaListaActivity extends Activity {
         setContentView(R.layout.minha_lista_screen);
         minhaLista = findViewById(R.id.lista);
 
+        registerForContextMenu(minhaLista);
         carregarConta();
         gerarLista();
     }
@@ -47,7 +49,7 @@ public class MinhaListaActivity extends Activity {
             listaFilmes.add(filmesVerDepois.getNomeFilme());
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(MinhaListaActivity.this,
+        adapter = new ArrayAdapter<String>(MinhaListaActivity.this,
                 android.R.layout.simple_list_item_1,listaFilmes);
         minhaLista.setAdapter(adapter);
     }
@@ -77,5 +79,9 @@ public class MinhaListaActivity extends Activity {
         String idFilme = filme.getIdFilme();
 
         filmesDao.excluir(idFilme);
+
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
     }
 }
